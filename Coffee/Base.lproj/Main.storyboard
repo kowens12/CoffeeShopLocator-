@@ -41,10 +41,13 @@
                             <constraint firstItem="z7g-8a-w53" firstAttribute="top" secondItem="qlF-N6-nXC" secondAttribute="bottom" id="vqw-xs-K2S"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapView" destination="qlF-N6-nXC" id="Wc6-RX-xmI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="700" y="478"/>
+            <point key="canvasLocation" x="628" y="478"/>
         </scene>
     </scenes>
 </document>
