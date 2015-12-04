@@ -9,13 +9,17 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, MKMapViewDelegate {
     
     @IBOutlet var mapView: MKMapView?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        if let mapView = self.mapView {
+            mapView.delegate = self
+        }
     }
 
     override func didReceiveMemoryWarning() {
