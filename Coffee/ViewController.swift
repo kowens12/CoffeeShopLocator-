@@ -19,7 +19,7 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     let distanceSpan:Double = 500
     
     var lastLocation:CLLocation?
-    var venues: Results<Venue>?
+    var venues: [Venue]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,12 +27,14 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("onVenuesUpdated:"), name: API.notifications.venuesUpdated, object: nil)
         //^^ this will tell the notification center that self is listening to a notification of type API.notifications.venuesUpdated
         
-        if let mapView = self.mapView {
-            mapView.delegate = self
-        }
     }
     
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        if let mapView = self.mapView {
+            mapView.delegate = self
+        }
         
         if locationManager == nil {
             locationManager = CLLocationManager()
@@ -84,9 +86,21 @@ THIS is performed in the plist, first add the NSLocationAlwaysUsageDescription r
             if getDataFromFoursquare == true {
                 CoffeeAPI.sharedInstance.getCoffeeShopsWithLocation(location)
             }
-            let realm  = try! Realm() // first we reference Realm
+            // the following 3 lines are replaced by the code starting after commented out
+//            let realm  = try! Realm() // first we reference Realm
+//            
+//            venues = realm.objects(Venue) // Next, we request all Realm objects of class Venue and append it to an array of Venues
+
+            let (start, stop) = calculateCoordinatesWithRegion(location)
             
-            venues = realm.objects(Venue) // Next, we request all Realm objects of class Venue and append it to an array of Venues
+            let predicate = NSPredicate(format: "latitude < %f AND latitude  %f AND longitude > %f AND longitude < %f", start.latitude, stop.latitude, start.longitude, stop.longitude)
+            
+            let realm = try! Realm()
+            
+            venues = realm.objects(Venue).filter(predicate).sort {
+                location.distanceFromLocation($0.coordinate) < location.distanceFromLocation($1.coordinate)
+            }
+            
             
             for venue in venues! { // The, we loop through the array of venues to annotate their locations to the map
                 let annotation = CoffeeAnnotation(title: venue.name, subtitle: venue.address, coordinate: CLLocationCoordinate2D(latitude: Double(venue.latitude), longitude: Double(venue.longitude)))
@@ -95,6 +109,20 @@ THIS is performed in the plist, first add the NSLocationAlwaysUsageDescription r
             }
         }
         tableView?.reloadData()
+    }
+    
+    func calculateCoordinatesWithRegion(location: CLLocation) -> (CLLocationCoordinate2D, CLLocationCoordinate2D) {
+        let region = MKCoordinateRegionMakeWithDistance(location.coordinate, distanceSpan, distanceSpan)
+        
+        var start: CLLocationCoordinate2D = CLLocationCoordinate2D()
+        var stop: CLLocationCoordinate2D = CLLocationCoordinate2D()
+        
+        start.latitude = region.center.latitude + (region.span.latitudeDelta / 2.0)
+        start.longitude = region.center.longitude - (region.span.longitudeDelta / 2.0)
+        stop.latitude = region.center.latitude - (region.span.latitudeDelta / 2.0)
+        stop.longitude = region.center.longitude + (region.span.longitudeDelta / 2.0)
+        
+        return (start, stop)
     }
     
     // the following code ensures the annotations added to the map are actually shown
