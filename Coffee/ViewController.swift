@@ -75,7 +75,22 @@ THIS is performed in the plist, first add the NSLocationAlwaysUsageDescription r
         }
     }
     
-    
+    // the following code ensures the annotations added to the map are actually shown
+    // it is similar to the way a TBView displays content in a cell.  It reauses the cells / annotations
+    // as the user moves across the MapView
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation.isKindOfClass(MKUserLocation) { // first, we check the annotation is NOT the user blip
+            return nil
+        }
+        var view = mapView.dequeueReusableAnnotationViewWithIdentifier("annotationIdentifier") // Next, we dequeue an annotation / pin
+        
+        if view == nil { // but if no pin was dequeued, lets created a new pin / annotation
+            view = MKPinAnnotationView(annotation: annotation, reuseIdentifier: "annotationIdentifier")
+        }
+        view?.canShowCallout = true // Then, allow the pins to show a callout to display information
+        
+        return view // finally, return the view so that it can be displayed
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

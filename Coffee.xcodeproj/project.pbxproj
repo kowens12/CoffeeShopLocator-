@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3C45FAD1C139E15006DCBA4 /* CoffeeAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C45FAC1C139E15006DCBA4 /* CoffeeAnnotation.swift */; };
 		D3CA5ADB1C11EC450007A3FF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CA5ADA1C11EC450007A3FF /* AppDelegate.swift */; };
 		D3CA5ADD1C11EC450007A3FF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CA5ADC1C11EC450007A3FF /* ViewController.swift */; };
 		D3CA5AE01C11EC450007A3FF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D3CA5ADE1C11EC450007A3FF /* Main.storyboard */; };
@@ -41,6 +42,7 @@
 		53C4136E949E6BBBC5B1A067 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		5A8981B1CCAA0F50B029CF77 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0FBCCF533C9162CF987553C /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		D3C45FAC1C139E15006DCBA4 /* CoffeeAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoffeeAnnotation.swift; sourceTree = "<group>"; };
 		D3CA5AD71C11EC450007A3FF /* Coffee.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Coffee.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3CA5ADA1C11EC450007A3FF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3CA5ADC1C11EC450007A3FF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -133,6 +135,7 @@
 				D3CA5ADC1C11EC450007A3FF /* ViewController.swift */,
 				D3F62C261C1217A600F32172 /* CoffeeAPI.swift */,
 				D3F62C281C123A5500F32172 /* Venue.swift */,
+				D3C45FAC1C139E15006DCBA4 /* CoffeeAnnotation.swift */,
 				D3CA5ADE1C11EC450007A3FF /* Main.storyboard */,
 				D3CA5AE11C11EC450007A3FF /* Assets.xcassets */,
 				D3CA5AE31C11EC450007A3FF /* LaunchScreen.storyboard */,
@@ -342,6 +345,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3CA5ADD1C11EC450007A3FF /* ViewController.swift in Sources */,
+				D3C45FAD1C139E15006DCBA4 /* CoffeeAnnotation.swift in Sources */,
 				D3F62C291C123A5500F32172 /* Venue.swift in Sources */,
 				D3F62C271C1217A600F32172 /* CoffeeAPI.swift in Sources */,
 				D3CA5ADB1C11EC450007A3FF /* AppDelegate.swift in Sources */,
