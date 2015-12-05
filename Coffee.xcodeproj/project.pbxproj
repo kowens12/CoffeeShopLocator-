@@ -16,6 +16,7 @@
 		D3CA5AFB1C11EC450007A3FF /* CoffeeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3CA5AFA1C11EC450007A3FF /* CoffeeUITests.swift */; };
 		D3F62C251C11FBE100F32172 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3F62C241C11FBE100F32172 /* MapKit.framework */; };
 		D3F62C271C1217A600F32172 /* CoffeeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F62C261C1217A600F32172 /* CoffeeAPI.swift */; };
+		D3F62C291C123A5500F32172 /* Venue.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F62C281C123A5500F32172 /* Venue.swift */; };
 		DE8DE7CD2F90B60F64EF6505 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A8981B1CCAA0F50B029CF77 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,6 +56,7 @@
 		D3CA5AFC1C11EC450007A3FF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D3F62C241C11FBE100F32172 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		D3F62C261C1217A600F32172 /* CoffeeAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoffeeAPI.swift; sourceTree = "<group>"; };
+		D3F62C281C123A5500F32172 /* Venue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Venue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -134,6 +136,7 @@
 				D3CA5AE11C11EC450007A3FF /* Assets.xcassets */,
 				D3CA5AE31C11EC450007A3FF /* LaunchScreen.storyboard */,
 				D3CA5AE61C11EC450007A3FF /* Info.plist */,
+				D3F62C281C123A5500F32172 /* Venue.swift */,
 			);
 			path = Coffee;
 			sourceTree = "<group>";
@@ -339,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D3CA5ADD1C11EC450007A3FF /* ViewController.swift in Sources */,
+				D3F62C291C123A5500F32172 /* Venue.swift in Sources */,
 				D3F62C271C1217A600F32172 /* CoffeeAPI.swift in Sources */,
 				D3CA5ADB1C11EC450007A3FF /* AppDelegate.swift in Sources */,
 			);
