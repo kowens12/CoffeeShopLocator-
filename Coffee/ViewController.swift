@@ -10,9 +10,10 @@ import UIKit
 import MapKit
 import RealmSwift
 
-class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
+class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate, UITableViewDataSource, UITableViewDelegate {
     
     @IBOutlet var mapView: MKMapView?
+    @IBOutlet var tableView: UITableView?
     
     var locationManager: CLLocationManager?
     let distanceSpan:Double = 500
@@ -31,8 +32,8 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
         }
     }
     
-    override func viewDidAppear(animated: Bool)
-    {
+    override func viewWillAppear(animated: Bool) {
+        
         if locationManager == nil {
             locationManager = CLLocationManager()
             
@@ -42,12 +43,19 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
             locationManager!.distanceFilter = 50 // Don't send location updates with a distance smaller than 50 meters between them
             locationManager!.startUpdatingLocation()
         }
+        
+        if let tableView = self.tableView {
+            tableView.delegate = self
+            tableView.dataSource = self
+        }
+        
     }
     
     func onVenuesUpdated(notification: NSNotification) {
         refreshVenues(nil)
     }
     
+    // MARK: Location Manager Methods
     
 /* we need to be sure we have configured the token to receive permission to use the user's location
 THIS is performed in the plist, first add the NSLocationAlwaysUsageDescription row and add a string to prompt the user. */
@@ -86,6 +94,7 @@ THIS is performed in the plist, first add the NSLocationAlwaysUsageDescription r
                 mapView?.addAnnotation(annotation)
             }
         }
+        tableView?.reloadData()
     }
     
     // the following code ensures the annotations added to the map are actually shown
@@ -105,6 +114,39 @@ THIS is performed in the plist, first add the NSLocationAlwaysUsageDescription r
         return view // finally, return the view so that it can be displayed
     }
 
+    // MARK: Table View delegate protocol methods
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return venues?.count ?? 0
+    }
+    
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        var cell = tableView.dequeueReusableCellWithIdentifier("cellIdentifier")
+        
+        if cell == nil {
+            cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cellIdentifier")
+        }
+        
+        if let venue = venues?[indexPath.row] {
+            cell!.textLabel?.text = venue.name
+            cell?.detailTextLabel?.text = venue.address
+        }
+        
+        return cell!
+    }
+    
+    // this method centers the map view to the pin / annotation selected in the tableview
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if let venue = venues?[indexPath.row] {
+            let region = MKCoordinateRegionMakeWithDistance(CLLocationCoordinate2D(latitude: Double(venue.latitude), longitude: Double(venue.longitude)), distanceSpan, distanceSpan)
+                mapView?.setRegion(region, animated: true)
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

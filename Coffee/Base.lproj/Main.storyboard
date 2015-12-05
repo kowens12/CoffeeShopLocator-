@@ -43,6 +43,7 @@
                     </view>
                     <connections>
                         <outlet property="mapView" destination="qlF-N6-nXC" id="Wc6-RX-xmI"/>
+                        <outlet property="tableView" destination="z7g-8a-w53" id="SYB-qk-7rL"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
