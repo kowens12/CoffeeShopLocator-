@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import RealmSwift
 
 class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     
@@ -15,6 +16,9 @@ class ViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDele
     
     var locationManager: CLLocationManager?
     let distanceSpan:Double = 500
+    
+    var lastLocation:CLLocation?
+    var venues: Results<Venue>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +54,28 @@ THIS is performed in the plist, first add the NSLocationAlwaysUsageDescription r
             mapView.setRegion(region, animated: true)
         }
     }
+    
+    func refreshVenues(location: CLLocation?, getDataFromFoursquare: Bool = false) {
+        if location != nil {
+            lastLocation = location
+        }
+        if let location = lastLocation {
+            if getDataFromFoursquare == true {
+                CoffeeAPI.sharedInstance.getCoffeeShopsWithLocation(location)
+            }
+            let realm  = try! Realm() // first we reference Realm
+            
+            venues = realm.objects(Venue) // Next, we request all Realm objects of class Venue and append it to an array of Venues
+            
+            for venue in venues! { // The, we loop through the array of venues to annotate their locations to the map
+                let annotation = CoffeeAnnotation(title: venue.name, subtitle: venue.address, coordinate: CLLocationCoordinate2D(latitude: Double(venue.latitude), longitude: Double(venue.longitude)))
+            
+                mapView?.addAnnotation(annotation)
+            }
+        }
+    }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -58,4 +84,35 @@ THIS is performed in the plist, first add the NSLocationAlwaysUsageDescription r
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
