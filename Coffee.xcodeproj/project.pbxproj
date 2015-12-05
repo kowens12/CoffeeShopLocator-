@@ -132,11 +132,11 @@
 				D3CA5ADA1C11EC450007A3FF /* AppDelegate.swift */,
 				D3CA5ADC1C11EC450007A3FF /* ViewController.swift */,
 				D3F62C261C1217A600F32172 /* CoffeeAPI.swift */,
+				D3F62C281C123A5500F32172 /* Venue.swift */,
 				D3CA5ADE1C11EC450007A3FF /* Main.storyboard */,
 				D3CA5AE11C11EC450007A3FF /* Assets.xcassets */,
 				D3CA5AE31C11EC450007A3FF /* LaunchScreen.storyboard */,
 				D3CA5AE61C11EC450007A3FF /* Info.plist */,
-				D3F62C281C123A5500F32172 /* Venue.swift */,
 			);
 			path = Coffee;
 			sourceTree = "<group>";

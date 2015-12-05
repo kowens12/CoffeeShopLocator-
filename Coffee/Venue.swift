@@ -21,10 +21,9 @@ class Venue: Object {
     
     var coordinate:CLLocation {
         return CLLocation(latitude: Double(latitude), longitude: Double(longitude));
-    }
+    } // REMINDER: this is a computed property & will not be stored in Realm, but is used to determine the CLLocation.
     
-    override static func primaryKey() -> String?
-    {
+    override static func primaryKey() -> String? {
         return "id";
-    }
+    } // This method creates the unique identifier for the Realm object created - here it is a Venue object.
 }
