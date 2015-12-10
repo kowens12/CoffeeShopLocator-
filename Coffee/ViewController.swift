@@ -77,38 +77,50 @@ THIS is performed in the plist, first add the NSLocationAlwaysUsageDescription r
             refreshVenues(newLocation, getDataFromFoursquare: true)
         }
     }
-    
-    func refreshVenues(location: CLLocation?, getDataFromFoursquare: Bool = false) {
-        if location != nil {
-            lastLocation = location
-        }
-        if let location = lastLocation {
-            if getDataFromFoursquare == true {
-                CoffeeAPI.sharedInstance.getCoffeeShopsWithLocation(location)
-            }
-            // the following 3 lines are replaced by the code starting after commented out
-//            let realm  = try! Realm() // first we reference Realm
-//            
-//            venues = realm.objects(Venue) // Next, we request all Realm objects of class Venue and append it to an array of Venues
 
-            let (start, stop) = calculateCoordinatesWithRegion(location)
-            
-            let predicate = NSPredicate(format: "latitude < %f AND latitude  %f AND longitude > %f AND longitude < %f", start.latitude, stop.latitude, start.longitude, stop.longitude)
-            
-            let realm = try! Realm()
-            
-            venues = realm.objects(Venue).filter(predicate).sort {
-                location.distanceFromLocation($0.coordinate) < location.distanceFromLocation($1.coordinate)
-            }
-            
-            
-            for venue in venues! { // The, we loop through the array of venues to annotate their locations to the map
-                let annotation = CoffeeAnnotation(title: venue.name, subtitle: venue.address, coordinate: CLLocationCoordinate2D(latitude: Double(venue.latitude), longitude: Double(venue.longitude)))
-            
-                mapView?.addAnnotation(annotation)
-            }
+    func refreshVenues(location: CLLocation?, getDataFromFoursquare:Bool = false) {
+    // If location isn't nil, set it as the last location
+    
+        if location != nil {
+            lastLocation = location;
         }
-        tableView?.reloadData()
+    
+        // If the last location isn't nil, i.e. if a lastLocation was set OR parameter location wasn't nil
+        if let location = lastLocation {
+    
+            // Make a call to Foursquare to get data
+            if getDataFromFoursquare == true {
+        
+                CoffeeAPI.sharedInstance.getCoffeeShopsWithLocation(location);
+            }
+
+        // Convenience method to calculate the top-left and bottom-right GPS coordinates based on region (defined with distanceSpan)
+        let (start, stop) = calculateCoordinatesWithRegion(location);
+    
+    
+        // Set up a predicate that ensures the fetched venues are within the region
+        let predicate = NSPredicate(format: "latitude < %f AND latitude > %f AND longitude > %f AND longitude < %f", start.latitude, stop.latitude, start.longitude, stop.longitude);
+    
+        // Initialize Realm (while supressing error handling)
+        let realm = try! Realm();
+    
+        // Get the venues from Realm. Note that the "sort" isn't part of Realm, it's Swift, and it defeats Realm's lazy loading nature!
+        venues = realm.objects(Venue).filter(predicate).sort {
+            
+            location.distanceFromLocation($0.coordinate) < location.distanceFromLocation($1.coordinate);
+        };
+    
+        // Throw the found venues on the map kit as annotations
+        for venue in venues! {
+    
+            let annotation = CoffeeAnnotation(title: venue.name, subtitle: venue.address, coordinate: CLLocationCoordinate2D(latitude: Double(venue.latitude), longitude: Double(venue.longitude)));
+    
+            mapView?.addAnnotation(annotation);
+        }
+    
+        // RELOAD ALL THE DATAS !!!
+        tableView?.reloadData();
+        }
     }
     
     func calculateCoordinatesWithRegion(location: CLLocation) -> (CLLocationCoordinate2D, CLLocationCoordinate2D) {
